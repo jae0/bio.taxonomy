@@ -1,10 +1,10 @@
 
 
-  # taxonomy.db contains taxa/species codes that are internally (ecomod) consistent and parsimonious
+  # taxonomy.db contains taxa/species codes that are internally (bio) consistent and parsimonious
 
   # require ( multicore ) # simple parallel interface (using threads) .. does not work well in MSWindows?
 
-  ecomodLibrary( "groundfish", "ecomod_utilities", "ecomod_taxonomy" )
+  bioLibrary( "groundfish", "bio.utilities", "bio.taxonomy" )
 
   refresh.itis.tables = FALSE
   if ( refresh.itis.tables ) {

@@ -1,6 +1,6 @@
   itis.related = function( DS ) {
 
-    taxadir = project.datadirectory( "ecomod_taxonomy", "data" )
+    taxadir = project.datadirectory( "bio.taxonomy", "data" )
     dir.create( taxadir, recursive=TRUE, showWarnings=FALSE )
 
     if (DS %in% c( "itis.oracle", "itis.oracle.redo" ) ) {
