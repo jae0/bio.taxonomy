@@ -3,8 +3,8 @@
   taxonomy.db = function( DS="complete", itis.taxa.lowest="species" ) {
 
     taxadir.manually.maintained =  file.path(project.codedirectory( "taxonomy"), "data.manually.maintained" )  # part of the respository
-    taxadir = file.path(project.datadirectory( "taxonomy"), "data" )
-    localdir = file.path(project.datadirectory( "taxonomy"), "data", "data.locally.generated" )
+    taxadir = file.path(project.datadirectory( "ecomod_taxonomy"), "data" )
+    localdir = file.path(project.datadirectory( "ecomod_taxonomy"), "data", "data.locally.generated" )
 
     dir.create( taxadir.manually.maintained, recursive=TRUE, showWarnings=FALSE )
     dir.create( taxadir, recursive=TRUE, showWarnings=FALSE )

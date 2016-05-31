@@ -1,8 +1,8 @@
 
   itis.db = function( DS="itaxa", lnk=NULL, itis.kingdom=NULL ) {
-    
-		datdir = file.path( project.datadirectory("taxonomy"), "data", "data.locally.generated" )
-    itis.dir = file.path( project.datadirectory("taxonomy"), "data", "itis" )
+
+		datdir = file.path( project.datadirectory("ecomod_taxonomy"), "data", "data.locally.generated" )
+    itis.dir = file.path( project.datadirectory("ecomod_taxonomy"), "data", "itis" )
 
     dir.create( datdir, showWarnings = FALSE, recursive = TRUE )
 
@@ -12,9 +12,9 @@
       #system( paste( "rm -rf", itis.dir ) )
       dir.create( itis.dir, showWarnings = FALSE, recursive = TRUE )
       if (is.null(lnk)) lnk = "http://www.itis.gov/downloads/itisMySqlTables.tar.gz"
-      fn = file.path( tempdir(), basename(lnk) ) 
+      fn = file.path( tempdir(), basename(lnk) )
       download.file( url=lnk, destfile=fn )
-      system( paste( "tar -zxv --strip-components=1 --directory=", itis.dir, " --file=", fn, sep="" ) ) 
+      system( paste( "tar -zxv --strip-components=1 --directory=", itis.dir, " --file=", fn, sep="" ) )
       system( paste( "gzip -r", itis.dir ) )
       return ( itis.dir )
     }
@@ -25,7 +25,7 @@
       fn.itaxa = file.path( datdir, "itis.itaxa.rdata" )
       fn.taxon.unit.types = file.path( datdir, "itis.taxon.units.rdata" )
       fn.kingdoms = file.path( datdir, "itis.kingdoms.rdata" )
-      
+
       if (DS=="kingdoms") {
         load( fn.kingdoms )
         return ( kingdoms )
@@ -41,7 +41,7 @@
 				taxon.unit.types = taxon.unit.types[ which( taxon.unit.types$kingdom_id == kid ) , ]
 				return (taxon.unit.types)
       }
-     
+
       if (DS=="itaxa") {
         load( fn.itaxa )
 				if ( is.null(itis.kingdom) || itis.kingdom=="all"  ) {
@@ -63,7 +63,7 @@
       taxonomic.units$unit_name3 = iconv( taxonomic.units$unit_name3, from="latin1", to="UTF-8")
       taxonomic.units$unit_name4 = iconv( taxonomic.units$unit_name4, from="latin1", to="UTF-8")
       n0 = nrow( taxonomic.units )
-   
+
 
       geographic.div = read.csv( gzfile( file.path( itis.dir, "geographic_div.gz" ) ), sep="|", stringsAsFactors=F, quote="", fill=T , header=F)
       names( geographic.div ) = c( "tsn", "geographic_value", "update_date" )
@@ -77,13 +77,13 @@
         for ( ii in 1:length(j) ) {   ###<<<<<<<<<< TODO: make this parallel with mcapply
 
           print( paste( ii, "of", ntot  ) )
-          k = which( G$tsn == j[ii] ) 
+          k = which( G$tsn == j[ii] )
           G$geographic_value[ k[1] ] = paste( G$geographic_value[ k ], collapse=" + " )
         }
         geographic.div = G[ -i , ]  # remove the duplicated records
         rm (G)
 
-      
+
       itaxa = merge( taxonomic.units, geographic.div, by="tsn", all=T, sort=F )
       if ( nrow(itaxa) != n0 ) stop("Merge Error ")
 
@@ -102,7 +102,7 @@
         for ( ii in 1:length(j) ) {   ###<<<<<<<<<< TODO: make this parallel with mcapply
 
           print( paste( ii, "of", ntot  ) )
-          k = which( G$tsn == j[ii] ) 
+          k = which( G$tsn == j[ii] )
           G$jurisdiction[ k[1] ] = paste( G$juri.tmp[ k ], collapse=" + " )
         }
         jurisdiction = G[ -i , c("tsn", "jurisdiction" ) ]  # remove the duplicated records
@@ -116,7 +116,7 @@
       names( longnames ) = c( "tsn", "completename" )
       longnames$completename = iconv( longnames$completename, from="latin1", to="UTF-8")
       # primary keys = tsn
-      
+
       i = which(duplicated( longnames$tsn))
       if (length (i) > 0 ) stop( "Error: longnames has duplicates" )
 
@@ -136,14 +136,14 @@
         for ( ii in 1:length(j) ) {   ###<<<<<<<<<< TODO: make this parallel with mcapply
 
           print( paste( ii, "of", ntot  ) )
-          k = which( G$tsn == j[ii] ) 
+          k = which( G$tsn == j[ii] )
           G$tsn[ k[1] ] = paste( G$tsn[ k ], collapse=" + " )
         }
         synonym.links = G[ -i , ]  # remove the duplicated records
         rm (G)
 
       # there exist other tsn's in synonyms not found in main table
-      itaxa = merge( itaxa, synonym.links, by="tsn", all.x=T, all.y=F, sort=F )   
+      itaxa = merge( itaxa, synonym.links, by="tsn", all.x=T, all.y=F, sort=F )
       if ( nrow(itaxa) != n0 ) stop("Merge Error ")
 
 
@@ -152,9 +152,9 @@
 
 
       # primary keys = tsn, vern_id
-      # multiple names exist for many tsn's  
+      # multiple names exist for many tsn's
       vernaculars = vernaculars[  c( "tsn", "vernacular_name", "language" ) ]  # choose english where possible
-      vernaculars$vernacular_name = iconv( vernaculars$vernacular_name, from="latin1", to="UTF-8" ) 
+      vernaculars$vernacular_name = iconv( vernaculars$vernacular_name, from="latin1", to="UTF-8" )
         V = data.frame( tsn = unique( vernaculars$tsn ) )
         V = merge( V, vernaculars, by=c("tsn"), all.x=T, all.y=F, sort=F )
         V$vernacular = V$vernacular_name
@@ -162,30 +162,30 @@
         j = unique( V$tsn[i] )
         ntot = length (j )
         for ( ii in 1:length(j) ) {   ###<<<<<<<<<< TODO: make this parallel with mcapply
-          k = which( V$tsn == j[ii] ) 
+          k = which( V$tsn == j[ii] )
           print( paste( ii, "of", ntot ) )
           # print( paste( ii, "of", ntot, ":::" , paste( V$vernacular_name[ k ], collapse=" + ")   ) )
           oo = k[ which( V$language[k] %in% c("English", "unspecified") ) ]
           pp = ifelse (length(oo) > 0,  oo[1], k[1] )
           VV = V$vernacular_name[ pp ]  # temporary storage until the rest gets updated
           V$vernacular_name[ k[1] ] = paste( V$vernacular_name[ k ], collapse=" + " )
-          V$vernacular[ k[1] ] = VV 
+          V$vernacular[ k[1] ] = VV
           # print( VV )
         }
         vernaculars = V[ -i , ]  # remove the duplicated records
         rm (V)
 
-      itaxa = merge( itaxa, vernaculars, by="tsn", all.x=T, all.y=F, sort=F )   
+      itaxa = merge( itaxa, vernaculars, by="tsn", all.x=T, all.y=F, sort=F )
       if ( nrow(itaxa) != n0 ) stop("Merge Error ")
 
       kingdoms = read.csv( gzfile( file.path( itis.dir, "kingdoms.gz" ) ), sep="|", stringsAsFactors=F, quote="", fill=T, header=F )
       names( kingdoms ) = c( "kingdom_id", "kingdom_name", "update_date" )
       # primary keys = kingdom_id
       kingdoms = kingdoms[ , c( "kingdom_id", "kingdom_name" ) ]
- 
+
 
       taxon.unit.types = read.csv( gzfile( file.path( itis.dir, "taxon_unit_types.gz" ) ), sep="|", stringsAsFactors=F, quote="", fill=T, header=F )
-      names( taxon.unit.types ) = c( "kingdom_id", "rank_id", "rank_name" , "dir_parent_rank_id", "req_parent_rank_id", "update_date" ) 
+      names( taxon.unit.types ) = c( "kingdom_id", "rank_id", "rank_name" , "dir_parent_rank_id", "req_parent_rank_id", "update_date" )
       # primary keys = kingdom_id, rank_id
       taxon.unit.types = taxon.unit.types[ , c( "kingdom_id", "rank_id", "rank_name" , "dir_parent_rank_id", "req_parent_rank_id" ) ]
 
@@ -201,10 +201,10 @@
         just.what.is.needed = T
         if (! just.what.is.needed) {
           # additional tables ... not really needed
-          
+
           hierachy = read.csv( gzfile( file.path( itis.dir, "hierarchy.gz" ) ), sep="|", stringsAsFactors=F, quote="", fill=T, header=F )
           names( hierachy ) = c( "hierarchy_string" )
-          # primary keys = hierarchy_string 
+          # primary keys = hierarchy_string
           # these are tsn values delimited by a hyphen from parent-child
 
           comments = read.csv( gzfile( file.path( itis.dir, "comments.gz" ) ), sep="|", stringsAsFactors=F, quote="", fill=T, header=F )
@@ -218,7 +218,7 @@
 
 
     }
-  
+
   }
 
 

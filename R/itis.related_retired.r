@@ -1,14 +1,14 @@
   itis.related = function( DS ) {
- 
-    taxadir = project.datadirectory( "taxonomy", "data" )
+
+    taxadir = project.datadirectory( "ecomod_taxonomy", "data" )
     dir.create( taxadir, recursive=TRUE, showWarnings=FALSE )
- 
+
     if (DS %in% c( "itis.oracle", "itis.oracle.redo" ) ) {
-      
+
       ### NOT USED ??? TO DELETE ?
-      
+
       fn.itis = file.path( taxadir, "itis.oracle.rdata" )
-      if (DS=="itis.oracle" ) {  
+      if (DS=="itis.oracle" ) {
         load( fn.itis )
         return (itis)
       }
@@ -21,14 +21,14 @@
       save(itis, file=fn.itis, compress=T)
       return (itis)
     }
-    
+
     if (DS %in% c( "itis.groundfish", "itis.groundfish.redo" ) ) {
-      
-      
+
+
       ### NOT USED ??? TO DELETE ?
-      
+
       fn.itis = file.path( taxadir, "itis.groundfish.rdata" )
-      if (DS=="itis.groundfish" ) {  
+      if (DS=="itis.groundfish" ) {
         load( fn.itis )
         return (itis)
       }
@@ -41,14 +41,14 @@
       save(itis, file=fn.itis, compress=T)
       return (itis)
     }
-    
+
     if (DS %in% c( "itis.observer", "itis.observer.redo" ) ) {
-      
-      
+
+
       ### NOT USED ??? TO DELETE ?
-      
+
       fn.itis = file.path( taxadir, "itis.observer.rdata" )
-      if (DS=="itis.observer" ) {  
+      if (DS=="itis.observer" ) {
         load( fn.itis )
         return (itis)
       }
