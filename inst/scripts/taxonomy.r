@@ -4,7 +4,7 @@
 
   # require ( multicore ) # simple parallel interface (using threads) .. does not work well in MSWindows?
 
-  bioLibrary( "groundfish", "bio.utilities", "bio.taxonomy" )
+  bioLibrary( "bio.groundfish", "bio.utilities", "bio.taxonomy" )
 
   refresh.itis.tables = FALSE
   if ( refresh.itis.tables ) {

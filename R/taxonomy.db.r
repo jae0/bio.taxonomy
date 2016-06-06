@@ -2,11 +2,9 @@
 
   taxonomy.db = function( DS="complete", itis.taxa.lowest="species" ) {
 
-    taxadir.manually.maintained =  file.path(project.codedirectory( "taxonomy"), "data.manually.maintained" )  # part of the respository
     taxadir = file.path(project.datadirectory( "bio.taxonomy"), "data" )
     localdir = file.path(project.datadirectory( "bio.taxonomy"), "data", "data.locally.generated" )
 
-    dir.create( taxadir.manually.maintained, recursive=TRUE, showWarnings=FALSE )
     dir.create( taxadir, recursive=TRUE, showWarnings=FALSE )
     dir.create( localdir, recursive=TRUE, showWarnings=FALSE )
 
@@ -276,7 +274,6 @@
     if (DS %in% c( "life.history", "life.history.redo") ) {
 
       fn = file.path( localdir, "spcodes.lifehistory.rdata")
-      # fn.local = file.path( taxadir.manually.maintained, "groundfish.lifehistory.manually.maintained.csv")
 
       fn.local = system.file("extdata", "groundfish.lifehistory.manually.maintained.csv", package = "bio.taxonomy")
 
