@@ -13,11 +13,11 @@
     if ( DS %in% c("spcodes", "spcodes.redo"  ) ) {
       # this is just a synonym for the groundfish data dump :
       if ( DS == "spcodes" ) {
-        spcodes = groundfish.db( DS="spcodes.odbc" )
+        spcodes = groundfish.db( DS="spcodes.rawdata" )
         return( spcodes )
       }
 
-      groundfish.db( DS="spcodes.odbc.redo" )
+      groundfish.db( DS="spcodes.rawdata.redo" )
       return ( "Complete" )
     }
 
@@ -172,7 +172,7 @@
         jj = which( !is.finite(spi$itis.tsn) & spi$tolookup   )
 
         if (length(jj) > 0 ) {
-          # should not be necessary unles taxa list at ODBC level has changed (e.g., due to new species inclusions )
+          # should not be necessary unles taxa list at rawdata level has changed (e.g., due to new species inclusions )
           print( "The following species have no itis tsn matches. ")
 	  			print( "Their tsn's should be manually identified and workarounds should be placed in this" )
           print( "function, 'taxonomy.db(DS='groundfish.itis.redo')' " )
