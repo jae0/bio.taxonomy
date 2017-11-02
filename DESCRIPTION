@@ -10,6 +10,6 @@ Suggests: knitr, rmarkdown, groundfish
 VignetteBuilder: knitr
 License: MIT
 LazyData: true
-URL: https://github.com/Beothuk/bio.taxonomy/
+URL: https://github.com/jae0/bio.taxonomy/
 
 
