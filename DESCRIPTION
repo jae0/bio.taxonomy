@@ -1,12 +1,11 @@
 Package: bio.taxonomy
-Title: Package that interacts with bio and associated projects to ... 
+Title: R package that does useful things with taxonomic hierarchies ... 
 Version: 0.1
 Authors@R: c( person("Jae", "Choi", email="choijaeseok@gmail.com", role=c("aut", "cre")) ) 
-Description: This project interacts with the functionality of bio 
-    to do provide opertations upon taxonomic hierarchies.
+Description: Provide opertations upon taxonomic hierarchies.
 Depends: R (>= 3.0.0)
-Imports: devtools, bio.base, bio.utilities
-Suggests: knitr, rmarkdown, groundfish
+Imports: devtools, emenv
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: MIT
 LazyData: true
