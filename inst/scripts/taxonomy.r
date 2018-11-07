@@ -27,6 +27,15 @@
   }
 
 
+
+### NOTE:: taxonomy db is creating wrong lookup for some species .. turtles  <<<<<<<<<<<<<<<<<<<
+
+## TODO:: add Worms database
+## links to observer database species codes
+
+
+
+
   example.usage = FALSE
   if (example.usage) {
 
@@ -78,5 +87,3 @@
     sid = itis.code.extract( DS="itaxa.vernacular", value="atlantic cod" )
 
   }
-
-
