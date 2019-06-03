@@ -4,7 +4,7 @@
 
   # require ( multicore ) # simple parallel interface (using threads) .. does not work well in MSWindows?
 
-  project.library( "aegis", "aegis.base", "bio.taxonomy" )
+  project.library( "aegis", "aegis", "bio.taxonomy" )
 
   refresh.itis.tables = FALSE
   if ( refresh.itis.tables ) {
