@@ -3,10 +3,8 @@ Title: R package that does useful things with taxonomic hierarchies ...
 Version: 0.1
 Authors@R: c( person("Jae", "Choi", email="choi.jae.seok@gmail.com", role=c("aut", "cre")) )
 Description: Provide opertations upon taxonomic hierarchies.
-Depends: R (>= 3.0.0)
-Imports: devtools
-Suggests: knitr, rmarkdown
-VignetteBuilder: knitr
+Depends: R (>= 3.0.0), igraph
+Suggests: aegis
 License: MIT
 LazyData: true
 URL: https://github.com/jae0/bio.taxonomy/
