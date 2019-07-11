@@ -129,7 +129,8 @@
 
   		# for all duplicated tsn's, point them to the same species id:
       # spec.clean id's to point to a single spec id (choose min value as default)
-			dup.tsn = sort( unique( spi$itis.tsn[ duplicates.toremove( spi$itis.tsn )]  ))
+		  dd = 	which(spi$itis.tsn %in% spi$itis.tsn[which(duplicated(spi$itis.tsn))]) # all dups
+      dup.tsn = sort( unique( spi$itis.tsn[ dd ]  ))
 			if (length( dup.tsn) > 0 ) {
         for (tsni in dup.tsn) {
           oi = which( spi$itis.tsn ==tsni )

@@ -16,7 +16,7 @@
       itis.observer = taxonomy.db( "itis.observer.redo" )
       toextract = colnames( itis.observer)  # remove a few unuses vars
       itis = rbind( itis.groundfish[,toextract] , itis.observer[,toextract] )
-      ii = duplicates.toremove( itis$given_spec_code )
+      ii = which(duplicated( itis$given_spec_code ) )
       itis = itis[ -ii, ]
       save(itis, file=fn.itis, compress=T)
       return (itis)
