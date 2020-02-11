@@ -155,11 +155,23 @@
 #1956 8200         COELENTERATA         COELENTERATA       8200    Obsolete: Cnidaria and Ctenophora, using latter
 #2133 8363 HALIPTERUS BALTICINA HALIPTERUS BALTICINA       8363    Species not found, taken as genus
 
-        # overrides are placed here:
 
-        known.issues.spec = c(  3163,   6700,  2865,   1800,   1920,   8200,   8363)  # add new unmatched "spec" here
-        known.issues.tsn  = c( 67602, 158142, 93681, 203347, 155470, 118845, 719025)  # manually determined tsn's here
-        known.issues.comments = c( "", "Species not found: common ancestor Dendrochirotida", "", "", "", "Obsolete: Cnidaria and Ctenophora, using latter", "Species not found: genus" )
+# as of 07 Feb 2020, the following have known issues of having no itis matches
+#  spec     name.common name.scientific comments spec.clean itis.tsn tolookup flag
+# 2383 8392   HETEROPOLYPUS   HETEROPOLYPUS     <NA>       8392       NA     TRUE
+# 2413 2796 MEGALANCEOLIDAE MEGALANCEOLIDAE     <NA>       2796       NA     TRUE
+# 2428 2580   PENTACHELIDAE   PENTACHELIDAE     <NA>       2580       NA     TRUE
+# 2439 2505      POLYBIIDAE      POLYBIIDAE     <NA>       2505       NA     TRUE
+# overrides are placed here:
+
+
+        # overrides are placed here:
+        known.issues.spec = c(  3163,   6700,  2865,   1800,   1920,   8200,
+           8363, 8392, 2796, 2580, 2505)  # add new unmatched "spec" here
+        known.issues.tsn  = c( 67602, 158142, 93681, 203347, 155470, 118845, 719025,
+           1812, 609975, 97683, 206959)  # manually determined tsn's here
+        known.issues.comments = c( "", "Species not found: common ancestor Dendrochirotida", "", "", "", "Obsolete: Cnidaria and Ctenophora, using latter",
+          "Species not found: genus", "Species not found, Using family Alcyoniidae", "Species not found, Using family Lanceoloidea", "Probably miscoded, assuming Penta, Using polychelidae", "Polybiidea fall under Potunoidea" )
 
         for ( pp in 1:length( known.issues.spec) ) {
           kk = known.issues.spec[pp]
