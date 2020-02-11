@@ -284,9 +284,9 @@
         return(sps)
       }
 
-      print( "Local files are manually maintained.")
-      print( "Export to CSV if they have been updated to with '|' as a delimiter and remove last xx lines:" )
-      print( fn.local )
+      #print( "Local files are manually maintained.")
+      #print( "Export to CSV if they have been updated to with '|' as a delimiter and remove last xx lines:" )
+      #print( fn.local )
 
       lifehist = read.csv( fn.local, sep="|", as.is=T, strip.white=T, header=T, stringsAsFactors=F )
       names( lifehist ) = tolower( names( lifehist ) )
