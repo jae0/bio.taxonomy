@@ -13,11 +13,11 @@
     if ( DS %in% c("spcodes", "spcodes.redo"  ) ) {
       # this is just a synonym for the groundfish data dump :
       if ( DS == "spcodes" ) {
-        spcodes = groundfish.db( DS="spcodes.rawdata" )
+        spcodes = groundfish_survey_db( DS="spcodes.rawdata" )
         return( spcodes )
       }
 
-      groundfish.db( DS="spcodes.rawdata.redo" )
+      groundfish_survey_db( DS="spcodes.rawdata.redo" )
       return ( "Complete" )
     }
 
