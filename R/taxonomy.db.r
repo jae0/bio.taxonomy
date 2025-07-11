@@ -193,7 +193,7 @@
 			    stop()
         }
       }
-      read_write_fast( spi, file=fn
+      read_write_fast( spi, file=fn )
 
       return ( fn )
     }

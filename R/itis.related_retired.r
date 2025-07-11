@@ -38,7 +38,7 @@
       odbcClose(connect)
       names(itis) =  tolower( names( itis ) )
       for (i in names(itis) ) itis[,i] = as.character( itis[,i] )
-      read_write_fast(itis, file=fn.itis
+      read_write_fast(itis, file=fn.itis )
       return (itis)
     }
 
