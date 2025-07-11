@@ -22,17 +22,17 @@
 
     if ( DS %in% c( "main.redo", "taxon.unit.types", "kingdoms", "itaxa" ) ) {
 
-      fn.itaxa = file.path( datdir, "itis.itaxa.rdata" )
-      fn.taxon.unit.types = file.path( datdir, "itis.taxon.units.rdata" )
-      fn.kingdoms = file.path( datdir, "itis.kingdoms.rdata" )
+      fn.itaxa = file.path( datdir, "itis.itaxa.rdz" )
+      fn.taxon.unit.types = file.path( datdir, "itis.taxon.units.rdz" )
+      fn.kingdoms = file.path( datdir, "itis.kingdoms.rdz" )
 
       if (DS=="kingdoms") {
-        load( fn.kingdoms )
+        kingdoms = read_write_fast( fn.kingdoms )
         return ( kingdoms )
       }
 
       if (DS=="taxon.unit.types") {
-        load( fn.taxon.unit.types )
+        itis.kingdom = read_write_fast( fn.taxon.unit.types )
 				if ( is.null(itis.kingdom) || itis.kingdom=="all" ) {
 					return (taxon.unit.types)
 				}
@@ -43,7 +43,7 @@
       }
 
       if (DS=="itaxa") {
-        load( fn.itaxa )
+        itis.kingdom = read_write_fast( fn.itaxa )
 				if ( is.null(itis.kingdom) || itis.kingdom=="all"  ) {
 					return ( itaxa )
 				}
@@ -190,9 +190,9 @@
       taxon.unit.types = taxon.unit.types[ , c( "kingdom_id", "rank_id", "rank_name" , "dir_parent_rank_id", "req_parent_rank_id" ) ]
 
 
-      save( itaxa, file=fn.itaxa, compress=T )
-      save( kingdoms, file=fn.kingdoms, compress=T )
-      save( taxon.unit.types, file=fn.taxon.unit.types, compress=T )
+      read_write_fast( itaxa, file=fn.itaxa )
+      read_write_fast( kingdoms, file=fn.kingdoms )
+      read_write_fast( taxon.unit.types, file=fn.taxon.unit.types )
 
       return ( "Done" )
 

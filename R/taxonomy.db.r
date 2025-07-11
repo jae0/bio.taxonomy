@@ -38,11 +38,11 @@
 			# a partial lookup table exists and is maintained locally but then is added to using
 			# text matching methods, which are a bit slow.
 
-      fn = file.path( localdir, "lookup.groundfish.itis.rdata" )
+      fn = file.path( localdir, "lookup.groundfish.itis.rdz" )
 
       if ( DS =="groundfish.itis") {
         spi = NULL
-        if (file.exists(fn)) load(fn)
+        if (file.exists(fn)) spi=read_write_fast(fn)
         return (spi)
       }
 
@@ -193,7 +193,7 @@
 			    stop()
         }
       }
-      save( spi, file=fn, compress=T )
+      read_write_fast( spi, file=fn
 
       return ( fn )
     }
@@ -208,11 +208,11 @@
       require ( parallel ) # simple parallel interface (using threads)
 
       itis.taxa.lowest = tolower(itis.taxa.lowest)
-      fn = file.path( localdir, paste("spcodes.full.taxonomy", itis.taxa.lowest, "rdata", sep=".") )
+      fn = file.path( localdir, paste("spcodes.full.taxonomy", itis.taxa.lowest, "rdz", sep=".") )
 
       if (DS=="full.taxonomy") {
         spf = NULL
-        if (file.exists(fn)) load(fn)
+        if (file.exists(fn)) spf = read_write_fast(fn)
         return(spf)
       }
 
@@ -274,7 +274,7 @@
       spf = cbind( spf, res )
       spf$rowindex = NULL
 
-      save( spf, file=fn, compress=T )
+      read_write_fast( spf, file=fn )
       return ( fn )
 
     }
@@ -286,13 +286,13 @@
 
     if (DS %in% c( "life.history", "life.history.redo") ) {
 
-      fn = file.path( localdir, "spcodes.lifehistory.rdata")
+      fn = file.path( localdir, "spcodes.lifehistory.rdz")
 
       fn.local = system.file("extdata", "groundfish.lifehistory.manually.maintained.csv", package = "bio.taxonomy")
 
       if (DS == "life.history" ) {
         sps = NULL
-        if (file.exists(fn)) load(fn)
+        if (file.exists(fn)) sps = read_write_fast(fn)
         return(sps)
       }
 
@@ -342,7 +342,7 @@
       if (length(last.check)>0) sps = sps[ -last.check , ]
 
 
-      save( sps, file=fn, compress=T )
+      read_write_fast( sps, file=fn )
       return( fn )
 
     }
@@ -351,10 +351,10 @@
     # ----------------------------------------------
 
     if ( DS %in% c("complete", "complete.redo") ) {
-		  fn = file.path( localdir, "spcodes.complete.rdata")
+		  fn = file.path( localdir, "spcodes.complete.rdz")
   	  sps = NULL
 			if (DS == "complete" ) {
-        if (file.exists(fn)) load(fn)
+        if (file.exists(fn)) sps = read_write_fast(fn)
         return(sps)
       }
 
@@ -378,7 +378,7 @@
 			sps = merge( sp, spi[,c("id", "usage", "children.n","children", "sci", "parent" )],
   			by.x="itis.tsn", by.y="id", all.x=T, all.y=F)
 
-			save (sps, file=fn, compress=T)
+			read_write_fast (sps, file=fn)
 			return ( fn )
 		}
 
@@ -389,12 +389,12 @@
 
     if (DS %in% c( "parsimonious",  "parsimonious.redo" )) {
 
-      fn = file.path( localdir, "spcodes.parsimonious.rdata" )
+      fn = file.path( localdir, "spcodes.parsimonious.rdz" )
 
       if ( DS =="parsimonious") {
  		    # determine the most parsimonious species list based upon know taxonomy/phylogeny and local species lists
   	    spi = NULL
-        if (file.exists(fn)) load(fn)
+        if (file.exists(fn)) spi = read_write_fast(fn)
         return(spi)
       }
 
@@ -424,7 +424,7 @@
         }
       }
 
-      save( spi, file=fn, compress=T )
+      read_write_fast( spi, file=fn )
 
       return ( fn )
     }

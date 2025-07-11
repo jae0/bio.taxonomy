@@ -7,9 +7,9 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.oracle.rdata" )
+      fn.itis = file.path( taxadir, "itis.oracle.rdz" )
       if (DS=="itis.oracle" ) {
-        load( fn.itis )
+        itis = read_write_fast( fn.itis )
         return (itis)
       }
       itis.groundfish = taxonomy.db( "itis.groundfish.redo" )
@@ -18,7 +18,7 @@
       itis = rbind( itis.groundfish[,toextract] , itis.observer[,toextract] )
       ii = which(duplicated( itis$given_spec_code ) )
       itis = itis[ -ii, ]
-      save(itis, file=fn.itis, compress=T)
+      read_write_fast(itis, file=fn.itis)
       return (itis)
     }
 
@@ -27,9 +27,9 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.groundfish.rdata" )
+      fn.itis = file.path( taxadir, "itis.groundfish.rdz" )
       if (DS=="itis.groundfish" ) {
-        load( fn.itis )
+        itis = read_write_fast( fn.itis )
         return (itis)
       }
       require(RODBC)
@@ -38,7 +38,7 @@
       odbcClose(connect)
       names(itis) =  tolower( names( itis ) )
       for (i in names(itis) ) itis[,i] = as.character( itis[,i] )
-      save(itis, file=fn.itis, compress=T)
+      read_write_fast(itis, file=fn.itis
       return (itis)
     }
 
@@ -47,9 +47,9 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.observer.rdata" )
+      fn.itis = file.path( taxadir, "itis.observer.rdz" )
       if (DS=="itis.observer" ) {
-        load( fn.itis )
+        itis = read_write_fast( fn.itis )
         return (itis)
       }
       require(RODBC)
@@ -58,7 +58,7 @@
       odbcClose(connect)
       names(itis) =  tolower( names( itis ) )
       for (i in names(itis) ) itis[,i] = as.character( itis[,i] )
-      save(itis, file=fn.itis, compress=T)
+      read_write_fast(itis, file=fn.itis)
       return (itis)
     }
 
