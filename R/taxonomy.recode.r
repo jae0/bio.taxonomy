@@ -237,24 +237,9 @@
         out$tolookup[qq] = FALSE
         out$flag[qq] = "No useful data"
       }
-
-      out = taxonomy.keywords.flag( out, "taxa" )
-      out = taxonomy.keywords.flag( out, "taxa", wds=c(
-        "perhaps", "empty shells", "unknown", "pink lump", "frozen", "shells scal",
-        "unidentified", "saved for identification", "unident", "saved for id", "maybe", "arc",
-        "unid", "invert unsp"  ) )
-
-      # singleton characters
-      out$taxa = gsub( "\\<[[:alnum:]]{1}\\>", " ", out$taxa , ignore.case=T )  # remove ()/, etc.
-
-      out = taxonomy.keywords.remove( out, "taxa", withpunctuation=T )
-      out = taxonomy.keywords.remove( out, "taxa", withpunctuation=F )
-
-      out = taxonomy.keywords.remove( out, "taxa", withpunctuation=F, wds.toremove=c(
-        "no", "new", "not as before", "frozennnnn" ) )
-
-      out$taxa = taxonomy.strip.unnecessary.characters( out$taxa )
-
+ 
+      out = taxonomy_clean( out, "taxa"  ) 
+ 
       vnames = c( "taxa", "taxa" )
       vtypes = c( "default", "vernacular" )
       out = itis.lookup.exhaustive.search( out, vnames, vtypes )

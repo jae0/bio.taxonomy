@@ -4,7 +4,95 @@
 
   # require ( multicore ) # simple parallel interface (using threads) .. does not work well in MSWindows?
 
-  project.library( "aegis", "aegis", "bio.taxonomy" )
+  require(aegis)
+  require(worrms)
+
+  project.library(  "aegis", "bio.taxonomy" )
+   
+  science_name = "Chionoecetes opilio"
+  common_name = "snow crab"
+
+  wm_records_name(name=science_name )[["valid_AphiaID"]]
+  
+  unique( wm_records_common(name=common_name)[["valid_AphiaID"]] )
+  
+  unique( wm_records_common(name=common_name)[["scientificname"]] )
+
+  o = wm_records_taxamatch(name=science_name )
+  
+  # potentially multiple solutions possible for a given name .. result is a list
+  unique( sapply(o, FUN=function(x) x[["valid_AphiaID"]] ) )
+ 
+  aphiaid = wm_name2id(name = science_name)
+  
+  wm_id2name(id = aphiaid )
+
+  wm_common_id(id = aphiaid )[["vernacular"]]  # vernacular name 
+
+  wm_classification(id = aphiaid ) 
+ 
+  unique( wm_synonyms(id = aphiaid )[["valid_AphiaID"]] )
+
+  wm_synonyms(id = aphiaid )[["scientificname"]]
+  
+  # wm_attr_def(id = aphiaid)  # attributes
+
+  o = bio.snowcrab::observer.db( DS="taxonomy" )
+ 
+  o$common_name = o$COMMON
+  o$scientific_name = o$SCIENTIFIC
+  
+  o = taxonomy_clean( o, "common_name" )
+  o = taxonomy_clean( o, "scientific_name" )
+
+  require(data.table)
+
+  setDT(o)
+  o$AphiaID = NA_integer_
+
+  for (i in 1:nrow(o)) {
+    
+    if ( !is.na(o[i, AphiaID]) ) next()
+    sn = o[i, scientific_name ]
+    message( sn )
+    if (!is.na(sn) & nchar(sn)>0 ) {
+      if (sn=="reserved") next()
+      asol = try( wm_name2id(name = sn), silent=TRUE )
+      if (inherits(asol, "try-error") ) next()
+      if ( length(asol) == 0 ) next()
+      aid = unique( asol )
+      if ( length(aid) == 1 ) {
+        message( "id found from scientific name" )
+        o[i, AphiaID := aid ]
+      } else {
+        message( "multiple ids found from scientific name" )
+        message( asol )
+      }
+    }
+  }
+
+  for (i in 1:nrow(o)) {
+    if ( !is.na(o[i, AphiaID]) ) next()
+    cn = o[i, common_name ]
+    message( cn )
+    if (!is.na(cn) & nchar(cn)>0 ) {
+      if (cn=="reserved") next()
+      asol = try(  wm_records_common(name=cn), silent=TRUE )
+      if (inherits(asol, "try-error") ) next()
+      if ( length(asol) == 0 ) next()
+      aid = unique( asol )
+      if ( length(aid) == 1 ) {
+        message( "id found from common name" )
+        o[i, AphiaID := aid ]
+      }
+    }
+  }
+  
+
+
+
+
+  require(ritis) # numerous similar methods 
 
   refresh.itis.tables = FALSE
   if ( refresh.itis.tables ) {

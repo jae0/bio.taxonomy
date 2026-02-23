@@ -76,25 +76,10 @@
 			lu = which( is.finite(spi$itis.tsn))
 			spi$tolookup[lu] = FALSE
 			spi$flag[lu] = "manually determined"
-
-
-      # check for keywords that flag that no lookup is necessary
-      spi = taxonomy.keywords.flag( spi, "name.scientific" )
-      spi = taxonomy.keywords.flag( spi, "name.common" )
-
-      # remove words with punctuation
-      spi = taxonomy.keywords.remove( spi, "name.scientific", withpunctuation=T )
-      spi = taxonomy.keywords.remove( spi, "name.common", withpunctuation=T )
-
-      # remove words without punctuation
-      spi = taxonomy.keywords.remove( spi, "name.scientific", withpunctuation=F )
-      spi = taxonomy.keywords.remove( spi, "name.common", withpunctuation=F )
-
-      # final formatting of names
-      spi$name.scientific = taxonomy.strip.unnecessary.characters(spi$name.scientific)
-      spi$name.common = taxonomy.strip.unnecessary.characters(spi$name.common)
-
-
+ 
+      spi = taxonomy_clean( spi, "name.scientific"  )
+      spi = taxonomy_clean( spi, "name.common"  )
+  
       # link itis with groundfish species codes using an exhaustive search of all taxa names
       vnames = c( "name.scientific", "name.scientific", "name.common")
       vtypes = c( "default", "vernacular", "vernacular", "default" )
