@@ -50,44 +50,116 @@
   setDT(o)
   o$AphiaID = NA_integer_
 
+
   for (i in 1:nrow(o)) {
     
     if ( !is.na(o[i, AphiaID]) ) next()
     sn = o[i, scientific_name ]
-    message( sn )
-    if (!is.na(sn) & nchar(sn)>0 ) {
-      if (sn=="reserved") next()
-      asol = try( wm_name2id(name = sn), silent=TRUE )
-      if (inherits(asol, "try-error") ) next()
-      if ( length(asol) == 0 ) next()
-      aid = unique( asol )
-      if ( length(aid) == 1 ) {
-        message( "id found from scientific name" )
-        o[i, AphiaID := aid ]
-      } else {
-        message( "multiple ids found from scientific name" )
-        message( asol )
-      }
-    }
-  }
-
-  for (i in 1:nrow(o)) {
-    if ( !is.na(o[i, AphiaID]) ) next()
     cn = o[i, common_name ]
-    message( cn )
-    if (!is.na(cn) & nchar(cn)>0 ) {
+    if (!is.na(sn) & nchar(sn)>0 ) {
+      message( sn, " - ", cn )
+      if (sn=="reserved") next()
       if (cn=="reserved") next()
-      asol = try(  wm_records_common(name=cn), silent=TRUE )
-      if (inherits(asol, "try-error") ) next()
-      if ( length(asol) == 0 ) next()
-      aid = unique( asol )
-      if ( length(aid) == 1 ) {
-        message( "id found from common name" )
-        o[i, AphiaID := aid ]
+
+      ssci = try( wm_name2id(name = sn), silent=TRUE )
+      uss = unique( ssci )
+      if ( !is.null(nrow(uss)) && nrow(uss) == 1 ) {
+        if (!inherits(ssci, "try-error")) {
+          message( "--->>> id found from scientific name" )
+          o[i, AphiaID := uss ]
+          next()
+        }
+      } 
+
+      scom = try(  wm_records_common(name=cn), silent=TRUE )
+      usc = unique( scom)
+      if ( !is.null(nrow(usc)) && nrow(usc) == 1 ) {
+        if (!inherits(scom, "try-error") ) {
+          message( "--->>> id found from common name" )
+          o[i, AphiaID := usc$AphiaID  ]
+          next()
+        }
+      } 
+      
+      sscm = try(  wm_records_common(name=sn), silent=TRUE )
+      ucc = nrow( sscm )
+      if (  !is.null(nrow(ucc)) && nrow(ucc) == 1 ) {
+        if (!inherits(sscm, "try-error") ){
+          message( "--->>> id found from common name as sci name" )
+          o[i, AphiaID := ucc$AphiaID ]
+          next()
+        }
       }
+   
+      sscm = try(  wm_records_common(name=sn, fuzzy=TRUE), silent=TRUE )
+      ucc = nrow( sscm )
+      if (  !is.null(nrow(ucc)) && nrow(ucc) == 1 ) {
+        if (!inherits(sscm, "try-error") ){
+          message( "--->>> id found from two words as sci name" )
+          o[i, AphiaID := ucc$AphiaID ]
+          next()
+        }
+      }
+
+      sscm = try(  wm_records_common(name=cn, fuzzy=TRUE), silent=TRUE )
+      ucc = nrow( sscm )
+      if (  !is.null(nrow(ucc)) && nrow(ucc) == 1 ) {
+        if (!inherits(sscm, "try-error") ){
+          message( "--->>> id found from one word of sci name" )
+          o[i, AphiaID := ucc$AphiaID ]
+          next()
+        }
+      }
+
+
+      test1 = sub("(\\w+\\s+).*", "\\1", sn)
+      test2 = sub("(\\w+\\s+\\w+).*", "\\1", sn)
+   
+      ssci = try( wm_records_name(name = test2), silent=TRUE )
+      uss = unique( ssci )
+      if ( !is.null(nrow(uss)) && nrow(uss) == 1 ) {
+        if (!inherits(ssci, "try-error")) {
+          message( "--->>> id found from scientific name 2" )
+          o[i, AphiaID := uss$AphiaID ]
+          next()
+        }
+      } 
+
+      sscm = try(  wm_records_common(name=test2, fuzzy=TRUE), silent=TRUE )
+      ucc = nrow( sscm )
+      if (  !is.null(nrow(ucc)) && nrow(ucc) == 1 ) {
+        if (!inherits(sscm, "try-error") ){
+          message( "--->>> id found from two words as sci name" )
+          o[i, AphiaID := ucc$AphiaID ]
+          next()
+        }
+      }
+
+      ssci = try( wm_records_name(name = test1), silent=TRUE )
+      uss = unique( ssci )
+      if ( !is.null(nrow(uss)) && nrow(uss) == 1 ) {
+        if (!inherits(ssci, "try-error")) {
+          message( "--->>> id found from scientific name 1" )
+          o[i, AphiaID := uss$AphiaID ]
+          next()
+        }
+      } 
+
+      sscm = try(  wm_records_common(name=test1, fuzzy=TRUE), silent=TRUE )
+      ucc = nrow( sscm )
+      if (  !is.null(nrow(ucc)) && nrow(ucc) == 1 ) {
+        if (!inherits(sscm, "try-error") ){
+          message( "--->>> id found from one word of sci name" )
+          o[i, AphiaID := ucc$AphiaID ]
+          next()
+        }
+      }
+
+
+
     }
   }
-  
+ 
 
 
 
