@@ -22,9 +22,9 @@
 
     if ( DS %in% c( "main.redo", "taxon.unit.types", "kingdoms", "itaxa" ) ) {
 
-      fn.itaxa = file.path( datdir, "itis.itaxa.rdz" )
-      fn.taxon.unit.types = file.path( datdir, "itis.taxon.units.rdz" )
-      fn.kingdoms = file.path( datdir, "itis.kingdoms.rdz" )
+      fn.itaxa = file.path( datdir, "itis.itaxa.rds" )
+      fn.taxon.unit.types = file.path( datdir, "itis.taxon.units.rds" )
+      fn.kingdoms = file.path( datdir, "itis.kingdoms.rds" )
 
       if (DS=="kingdoms") {
         kingdoms = read_write_fast( fn.kingdoms )

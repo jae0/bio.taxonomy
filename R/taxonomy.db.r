@@ -38,7 +38,7 @@
 			# a partial lookup table exists and is maintained locally but then is added to using
 			# text matching methods, which are a bit slow.
 
-      fn = file.path( localdir, "lookup.groundfish.itis.rdz" )
+      fn = file.path( localdir, "lookup.groundfish.itis.rds" )
 
       if ( DS =="groundfish.itis") {
         spi = NULL
@@ -193,7 +193,7 @@
       require ( parallel ) # simple parallel interface (using threads)
 
       itis.taxa.lowest = tolower(itis.taxa.lowest)
-      fn = file.path( localdir, paste("spcodes.full.taxonomy", itis.taxa.lowest, "rdz", sep=".") )
+      fn = file.path( localdir, paste("spcodes.full.taxonomy", itis.taxa.lowest, "rds", sep=".") )
 
       if (DS=="full.taxonomy") {
         spf = NULL
@@ -271,7 +271,7 @@
 
     if (DS %in% c( "life.history", "life.history.redo") ) {
 
-      fn = file.path( localdir, "spcodes.lifehistory.rdz")
+      fn = file.path( localdir, "spcodes.lifehistory.rds")
 
       fn.local = system.file("extdata", "groundfish.lifehistory.manually.maintained.csv", package = "bio.taxonomy")
 
@@ -336,7 +336,7 @@
     # ----------------------------------------------
 
     if ( DS %in% c("complete", "complete.redo") ) {
-		  fn = file.path( localdir, "spcodes.complete.rdz")
+		  fn = file.path( localdir, "spcodes.complete.rds")
   	  sps = NULL
 			if (DS == "complete" ) {
         if (file.exists(fn)) sps = read_write_fast(fn)
@@ -374,7 +374,7 @@
 
     if (DS %in% c( "parsimonious",  "parsimonious.redo" )) {
 
-      fn = file.path( localdir, "spcodes.parsimonious.rdz" )
+      fn = file.path( localdir, "spcodes.parsimonious.rds" )
 
       if ( DS =="parsimonious") {
  		    # determine the most parsimonious species list based upon know taxonomy/phylogeny and local species lists

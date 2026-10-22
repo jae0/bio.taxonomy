@@ -7,7 +7,7 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.oracle.rdz" )
+      fn.itis = file.path( taxadir, "itis.oracle.rds" )
       if (DS=="itis.oracle" ) {
         itis = read_write_fast( fn.itis )
         return (itis)
@@ -27,7 +27,7 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.groundfish.rdz" )
+      fn.itis = file.path( taxadir, "itis.groundfish.rds" )
       if (DS=="itis.groundfish" ) {
         itis = read_write_fast( fn.itis )
         return (itis)
@@ -47,7 +47,7 @@
 
       ### NOT USED ??? TO DELETE ?
 
-      fn.itis = file.path( taxadir, "itis.observer.rdz" )
+      fn.itis = file.path( taxadir, "itis.observer.rds" )
       if (DS=="itis.observer" ) {
         itis = read_write_fast( fn.itis )
         return (itis)
